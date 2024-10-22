@@ -66,30 +66,23 @@ while (true) {
     alert("Debe seleccionar al menos un producto");
     continue;
   }
+  console.log(seleccion);
 
-  let productosSeleccionados = seleccion
-    .split(",")
-    .map((item) => Number(item) - 1);
-  let valido = true;
-  productosSeleccionados.forEach((index) => {
-      if (index < 0 || index >= productos.length) {
-      valido = false;
-    }
-  });
-     if (!valido) {
+  if (isNaN(seleccion)) {
+    alert("Introduzca uno de los numeros que se encuentran en la lista");
+    continue;
+  }
+  if (seleccion > productos.length) {
     alert("Seleccione solo los productos que se encuentran en la lista");
     continue;
   }
-  
+  let producto = productos.find((item, index) => index == seleccion - 1);
+  console.log(producto);
 
-  productosSeleccionados.forEach((index) => {
-    let cantidad = Number(
-      prompt(
-        `Ingrese la cantidad de ${productos[index].nombre} que desea comprar`
-      )
-    );
-    carrito.agregarProducto(productos[index], cantidad);
-  });
+  let cantidad = Number(
+    prompt(`Ingrese la cantidad de ${producto.nombre} que desea comprar`)
+  );
+  carrito.agregarProducto(producto, cantidad);
 
   let agregarMas = prompt("Desea agregar más productos? (s/n)");
   if (agregarMas.toLowerCase() === "n") {
